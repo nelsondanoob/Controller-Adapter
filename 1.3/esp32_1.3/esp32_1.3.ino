@@ -7,7 +7,7 @@ ControllerPtr controller = nullptr; // Start with no saved controller
 ControllerPtr touchpad = nullptr; // Start with no saved touchpad
 
 // Save the connected devices (adapted from Bluepad32)
-void controllerConnected(ControllerPtr pad) // Handle a connected device
+void controllerConnected(ControllerPtr pad)
 {
   if (pad->isGamepad()) // Check whether this is a gamepad
   {
@@ -21,7 +21,7 @@ void controllerConnected(ControllerPtr pad) // Handle a connected device
 }
 
 // Clear the disconnected devices (adapted from Bluepad32)
-void onDisconnectedController(ControllerPtr pad) // Handle a disconnected device
+void onDisconnectedController(ControllerPtr pad)
 {
   if (controller == pad) // Check whether this is the saved controller
   {
@@ -58,7 +58,7 @@ void printControls(ControllerPtr pad) // Prepare and send the controller values
 }
 
 // Send touchpad data to the GIGA (based on Bluepad32)
-void PrintMouse(ControllerPtr pad) // Prepare and send the touchpad values
+void PrintMouse(ControllerPtr pad)
 {
   Serial2.printf("Touchpad buttons=%04x X=%d Y=%d\n", // Send touchpad movement and buttons to the GIGA
     pad->buttons(), // Touchpad buttons
@@ -67,26 +67,26 @@ void PrintMouse(ControllerPtr pad) // Prepare and send the touchpad values
 }
 
 // Set up serial and Bluetooth (Bluepad32 setup)
-void setup() // Prepare the serial and Bluetooth connections
+void setup()
 {
-  Serial.begin(115200); // Start Serial Monitor at 115200
-  Serial2.begin(115200, SERIAL_8N1, 16, 17); // Start the GIGA link at 115200, RX16 and TX17
+  Serial.begin(115200); // Start Serial Monitor
+  Serial2.begin(115200, SERIAL_8N1, 16, 17); // Start the GIGA link as well as pins
   BP32.setup(&controllerConnected, &onDisconnectedController); // Choose what runs on connect and disconnect
   BP32.enableVirtualDevice(true); // Enable touchpad support
   Serial.println("Bluetooth ready"); // Show that Bluetooth setup is finished
 }
 
 // Update Bluetooth and keep sending the controls
-void loop() // Keep reading and sending the controls
+void loop() 
 {
   BP32.update(); // Check for updated Bluetooth data
   if (controller && controller->isConnected()) // Check that the saved controller is connected
   {
     printControls(controller); // Send the saved controller values to the GIGA
-  }
+  
   if (touchpad && touchpad->isConnected() && touchpad->hasData()) // Check for data from the connected touchpad
   {
     PrintMouse(touchpad); // Send the touchpad values to the GIGA
   }
-  delay(20); // Wait 20 milliseconds before repeating
+  delay(20);
 }
