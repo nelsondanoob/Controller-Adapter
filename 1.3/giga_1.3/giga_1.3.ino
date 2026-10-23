@@ -1,4 +1,4 @@
-// USB API: https://github.com/arduino/ArduinoCore-mbed/blob/4.6.0/libraries/USBHID/src/USBMouseKeyboard.h
+ // USB API: https://github.com/arduino/ArduinoCore-mbed/blob/4.6.0/libraries/USBHID/src/USBMouseKeyboard.h
 
 #include <PluggableUSBHID.h> // Let the GIGA work as a USB input device
 #include <USBMouseKeyboard.h> // Send mouse and keyboard controls to the PC
@@ -11,9 +11,9 @@ String incomingMessage; // Build the text coming from the ESP32
 bool messageTooLong = false; // Remember if a message should be ignored
 bool active = false; // Remember if valid controls are active
 bool touchHeld = false; // Remember if the touchpad was already pressed
-unsigned long lastReceived = 0; // Save when the last valid message arrived
-unsigned long lastScrollTime = 0; // Save when the last scroll step happened
-int previousScrollDirection = 0; // Save the last scroll direction; 0 means none
+unsigned long lastReceived = 0; // Save when the last valid message 
+unsigned long lastScrollTime = 0; // Save when the last scroll
+int previousScrollDirection = 0; // Save the last scroll direction
 uint8_t previousKeys[6] = {}; // Save up to six held keys
 uint8_t previousMouse = 0; // Remember mouse buttons
 
@@ -182,10 +182,10 @@ void loop()
           readControls(incomingMessage); // Read the values and update the PC controls
         }
       }
-      incomingMessage = ""; // Clear the text ready for the next message
+      incomingMessage = ""; // Clear text
       messageTooLong = false; // Allow the next message to be checked
     }
-    else if (incoming != '\r') // Skip carriage-return characters
+    else if (incoming != '\r') // Skip character
     {
       if (incomingMessage.length() < 192) // Keep each message within 192 characters
       {
@@ -199,7 +199,7 @@ void loop()
   }
 
   // Release the controls if data stops
-  if (active && millis() - lastReceived > 350) // Check for more than 350 ms without a valid message
+  if (active && millis() - lastReceived > 350) // Check for 350 ms
   {
     releaseInputs(); // Release the keyboard keys and mouse buttons
   }
