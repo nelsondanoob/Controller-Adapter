@@ -97,6 +97,7 @@ void readControls(String incoming)
   {
     return;
   }
+  // Set range and buttons
   if (lx < -512 || lx > 512 || ly < -512 || ly > 512 ||
       rx < -512 || rx > 512 || ry < -512 || ry > 512)
   {
