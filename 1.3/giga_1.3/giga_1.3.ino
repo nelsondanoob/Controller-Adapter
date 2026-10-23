@@ -57,7 +57,7 @@ int mouseStep(int axis)
   return speed;
 }
 
-// Up/down = Scroll, push further to scroll faster
+// Scrolling
 int scrollStep(int axis)
 {
   int magnitude = abs(axis);
